@@ -2,7 +2,7 @@
     "name": "webgriffe/alternate-extension",
     "type": "magento-module",
     "license":"MIT",
-    "description":"Extension description here",
+    "description":"Alternate (aka Hreflang) Magento 1.x Extension",
     "authors":[
         {
             "name":"Webgriffe SRL",
