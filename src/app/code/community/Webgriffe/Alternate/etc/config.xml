@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webgriffe_Alternate>
+            <version>1.0.0</version>
+        </Webgriffe_Alternate>
+    </modules>
+    <global>
+        <models>
+            <webgriffe_alternate>
+                <class>Webgriffe_Alternate_Model</class>
+                <resourceModel>webgriffe_alternate_resource</resourceModel>
+            </webgriffe_alternate>
+            <webgriffe_alternate_resource>
+                <class>Webgriffe_Alternate_Model_Resource</class>
+            </webgriffe_alternate_resource>
+        </models>
+        <blocks>
+            <webgriffe_alternate>
+                <class>Webgriffe_Alternate_Block</class>
+            </webgriffe_alternate>
+        </blocks>
+        <helpers>
+            <webgriffe_alternate>
+                <class>Webgriffe_Alternate_Helper</class>
+            </webgriffe_alternate>
+        </helpers>
+        <resources>
+            <webgriffe_alternate_setup>
+                <setup>
+                    <module>Webgriffe_Alternate</module>
+                </setup>
+            </webgriffe_alternate_setup>
+        </resources>
+    </global>
+</config>

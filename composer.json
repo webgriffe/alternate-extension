@@ -1,0 +1,12 @@
+{
+    "name": "webgriffe/alternate-extension",
+    "type": "magento-module",
+    "license":"MIT",
+    "description":"Extension description here",
+    "authors":[
+        {
+            "name":"Webgriffe SRL",
+            "email":"support@webgriffe.com"
+        }
+    ]
+}
