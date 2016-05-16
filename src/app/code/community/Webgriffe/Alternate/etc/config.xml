@@ -33,4 +33,17 @@
             </webgriffe_alternate_setup>
         </resources>
     </global>
+    <frontend>
+        <events>
+            <controller_action_layout_generate_blocks_after>
+                <observers>
+                    <webgriffe_alternate>
+                        <type>singleton</type>
+                        <class>webgriffe_alternate/observer</class>
+                        <method>addAlternateLinksToHeadBlock</method>
+                    </webgriffe_alternate>
+                </observers>
+            </controller_action_layout_generate_blocks_after>
+        </events>
+    </frontend>
 </config>
