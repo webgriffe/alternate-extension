@@ -1,0 +1,5 @@
+"Include Region","Region ausgeben"
+"e.g. ""en-GB"" instead of just ""en""","z.B. ""en-GB"" statt ""en"""
+"Region from ""general/locale/code"" is used by default","Region von ""general/locale/code"" wird anderenfalls verwendet"
+"Override Region","Region abändern"
+"Override Region Value","Region"

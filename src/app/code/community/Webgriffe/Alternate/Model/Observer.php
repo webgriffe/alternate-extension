@@ -1,6 +1,5 @@
 <?php
 
-
 class Webgriffe_Alternate_Model_Observer
 {
     public function addAlternateLinksToHeadBlock(Varien_Event_Observer $event)
@@ -16,7 +15,7 @@ class Webgriffe_Alternate_Model_Observer
         }
 
         foreach ($this->getAlternateUrlsMap() as $localeCode => $url) {
-            $headBlock->addLinkRel('alternate" hreflang="'.$localeCode, $url);
+            $headBlock->addLinkRel('alternate" hreflang="' . $localeCode, $url);
         }
     }
 
@@ -53,9 +52,7 @@ class Webgriffe_Alternate_Model_Observer
                 $url = $store->getUrl('', array('_current' => true, '_use_rewrite' => true));
             }
 
-            $hreflangCode = $this->getHreflangCodeFromLocaleCode(
-                Mage::getStoreConfig('general/locale/code', $store->getId())
-            );
+            $hreflangCode = $this->getHreflangCodeFromLocaleCode($store->getId());
             $map[$hreflangCode] = $url;
         }
 
@@ -67,6 +64,7 @@ class Webgriffe_Alternate_Model_Observer
      * @param $categoryId
      * @param Mage_Core_Model_Store $store
      * @return string
+     * @throws \Mage_Core_Model_Store_Exception
      */
     private function rewrittenProductUrl($productId, $categoryId, Mage_Core_Model_Store $store)
     {
@@ -85,6 +83,7 @@ class Webgriffe_Alternate_Model_Observer
      * @param $categoryId
      * @param Mage_Core_Model_Store $store
      * @return string
+     * @throws \Mage_Core_Model_Store_Exception
      */
     private function rewrittenCategoryUrl($categoryId, Mage_Core_Model_Store $store)
     {
@@ -100,11 +99,12 @@ class Webgriffe_Alternate_Model_Observer
      * @param Mage_Core_Model_Store $store
      * @param $requestPath
      * @return string
+     * @throws \Mage_Core_Model_Store_Exception
      */
     private function addStoreSwitchUrl(Mage_Core_Model_Store $store, $requestPath)
     {
         if (!Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_STORE_IN_URL, $store->getCode()) &&
-            (Mage::app()->getStore()->getId() != $store->getId())
+            ((int)Mage::app()->getStore()->getId() !== (int)$store->getId())
         ) {
             $firstQueryChar = '?';
             if (strpos($requestPath, '?') !== false) {
@@ -118,11 +118,24 @@ class Webgriffe_Alternate_Model_Observer
     }
 
     /**
-     * @param $localeCode
+     * @param $storeId
      * @return string
      */
-    private function getHreflangCodeFromLocaleCode($localeCode)
+    private function getHreflangCodeFromLocaleCode($storeId)
     {
-        return str_replace('_', '-', $localeCode);
+        $helper = Mage::helper('webgriffe_alternate/config');
+        $localeCode = str_replace('_', '-', Mage::getStoreConfig('general/locale/code', $storeId));
+        $languageCode = substr($localeCode, 0, strpos($localeCode, '-'));
+
+        if ($helper->isIncludeRegionEnabled($storeId) === false) {
+            return $languageCode;
+        }
+
+        $overrideRegion = $helper->getOverrideRegionValue($storeId);
+        if ($helper->isOverrideRegionEnabled($storeId) && !empty($overrideRegion)) {
+            return $languageCode . '-' . strtoupper($overrideRegion);
+        }
+
+        return $localeCode;
     }
 }

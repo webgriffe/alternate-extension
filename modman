@@ -1,2 +1,4 @@
-src/app/code/community/Webgriffe/Alternate/ app/code/community/Webgriffe/Alternate/
+src/app/code/community/Webgriffe/Alternate app/code/community/Webgriffe/Alternate
 src/app/etc/modules/Webgriffe_Alternate.xml app/etc/modules/Webgriffe_Alternate.xml
+src/app/locale/de_DE/Webgriffe_Alternate.csv app/locale/de_DE/Webgriffe_Alternate.csv
+src/app/locale/en_US/Webgriffe_Alternate.csv app/locale/en_US/Webgriffe_Alternate.csv

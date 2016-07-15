@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Webgriffe_Alternate>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </Webgriffe_Alternate>
     </modules>
     <global>
@@ -33,6 +33,17 @@
             </webgriffe_alternate_setup>
         </resources>
     </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <webgriffe_alternate>
+                    <files>
+                        <default>Webgriffe_Alternate.csv</default>
+                    </files>
+                </webgriffe_alternate>
+            </modules>
+        </translate>
+    </adminhtml>
     <frontend>
         <events>
             <controller_action_layout_generate_blocks_after>
@@ -46,4 +57,13 @@
             </controller_action_layout_generate_blocks_after>
         </events>
     </frontend>
+    <default>
+        <catalog>
+            <webgriffe_alternate>
+                <include_region>1</include_region>
+                <override_region>0</override_region>
+                <override_region_value></override_region_value>
+            </webgriffe_alternate>
+        </catalog>
+    </default>
 </config>
