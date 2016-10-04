@@ -23,7 +23,7 @@ class Webgriffe_Alternate_Model_Observer
      * @return array
      * @throws Mage_Core_Exception
      */
-    private function getAlternateUrlsMap()
+    protected function getAlternateUrlsMap()
     {
         /** @var Mage_Catalog_Model_Product|null $product */
         $product = Mage::registry('current_product');
@@ -66,7 +66,7 @@ class Webgriffe_Alternate_Model_Observer
      * @return string
      * @throws \Mage_Core_Model_Store_Exception
      */
-    private function rewrittenProductUrl($productId, $categoryId, Mage_Core_Model_Store $store)
+    protected function rewrittenProductUrl($productId, $categoryId, Mage_Core_Model_Store $store)
     {
         $coreUrl = Mage::getModel('core/url_rewrite');
         $idPath = sprintf('product/%d', $productId);
@@ -85,7 +85,7 @@ class Webgriffe_Alternate_Model_Observer
      * @return string
      * @throws \Mage_Core_Model_Store_Exception
      */
-    private function rewrittenCategoryUrl($categoryId, Mage_Core_Model_Store $store)
+    protected function rewrittenCategoryUrl($categoryId, Mage_Core_Model_Store $store)
     {
         $coreUrl = Mage::getModel('core/url_rewrite');
         $idPath = sprintf('category/%d', $categoryId);
@@ -101,7 +101,7 @@ class Webgriffe_Alternate_Model_Observer
      * @return string
      * @throws \Mage_Core_Model_Store_Exception
      */
-    private function addStoreSwitchUrl(Mage_Core_Model_Store $store, $requestPath)
+    protected function addStoreSwitchUrl(Mage_Core_Model_Store $store, $requestPath)
     {
         if (!Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_STORE_IN_URL, $store->getCode()) &&
             ((int)Mage::app()->getStore()->getId() !== (int)$store->getId())
@@ -121,7 +121,7 @@ class Webgriffe_Alternate_Model_Observer
      * @param $storeId
      * @return string
      */
-    private function getHreflangCodeFromLocaleCode($storeId)
+    protected function getHreflangCodeFromLocaleCode($storeId)
     {
         $helper = Mage::helper('webgriffe_alternate/config');
         $localeCode = str_replace('_', '-', Mage::getStoreConfig('general/locale/code', $storeId));
