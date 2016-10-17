@@ -25,6 +25,12 @@ class Webgriffe_Alternate_Model_Observer
      */
     protected function getAlternateUrlsMap()
     {
+        /** @var Mage_Catalog_Model_Product|null $product */
+        $product = Mage::registry('current_product');
+
+        /** @var Mage_Catalog_Model_Category|null $category */
+        $category = Mage::registry('current_category');
+
         $map = array();
 
         /** @var Mage_Core_Model_Store $store */
@@ -33,7 +39,18 @@ class Webgriffe_Alternate_Model_Observer
                 continue;
             }
 
-            $url = $store->getUrl('*/*/*', array('_use_rewrite' => true, '_forced_secure' => true));
+            if ($product) {
+                $rewrittenProductUrl = $this->rewrittenProductUrl(
+                    $product->getId(),
+                    $category ? $category->getId() : null,
+                    $store
+                );
+                $url = $store->getBaseUrl() . $rewrittenProductUrl;
+            } elseif ($category) {
+                $url = $store->getBaseUrl() . $this->rewrittenCategoryUrl($category->getId(), $store);
+            } else {
+                $url = $store->getUrl('', array('_current' => true, '_use_rewrite' => true));
+            }
 
             $hreflangCode = $this->getHreflangCodeFromLocaleCode($store->getId());
             $map[$hreflangCode] = $url;
