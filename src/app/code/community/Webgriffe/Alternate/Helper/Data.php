@@ -2,6 +2,8 @@
 
 class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    const SWITCH_STORE_PARAM_CODE = '___store';
+
     /**
      * @param Mage_Core_Model_Store $store
      * @return string
@@ -66,7 +68,9 @@ class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
         $coreUrl->setStoreId($store->getId());
         $coreUrl->loadByIdPath($idPath);
 
-        return $this->addStoreSwitchUrl($store, $coreUrl->getRequestPath());
+        $requestPath = $this->addStoreSwitchUrl($store, $coreUrl->getRequestPath());
+        $requestPath = $this->addQueryParams($requestPath);
+        return $requestPath;
     }
 
     /**
@@ -80,14 +84,34 @@ class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
         if (!Mage::getStoreConfigFlag(Mage_Core_Model_Store::XML_PATH_STORE_IN_URL, $store->getCode()) &&
             ((int)Mage::app()->getStore()->getId() !== (int)$store->getId())
         ) {
-            $firstQueryChar = '?';
-            if (strpos($requestPath, '?') !== false) {
-                $firstQueryChar = '&';
-            }
-
-            $requestPath .= $firstQueryChar . http_build_query(array('___store' => $store->getCode()));
+            $requestPath .= $this->getFirstQueryChar($requestPath) . http_build_query(
+                    array(self::SWITCH_STORE_PARAM_CODE => $store->getCode())
+                );
         }
 
         return $requestPath;
+    }
+
+    /**
+     * @param string $requestPath
+     * @return string
+     */
+    protected function addQueryParams($requestPath)
+    {
+        $requestQuery = Mage::app()->getRequest()->getQuery();
+        unset($requestQuery[self::SWITCH_STORE_PARAM_CODE]); // this is handled by addStoreSwitchUrl
+        if (!empty($requestQuery)) {
+            $requestPath .= $this->getFirstQueryChar($requestPath) . http_build_query($requestQuery);
+        }
+        return $requestPath;
+    }
+
+    /**
+     * @param string $requestPath
+     * @return string
+     */
+    protected function getFirstQueryChar($requestPath)
+    {
+        return strpos($requestPath, '?') !== false ? '&' : '?';
     }
 }
