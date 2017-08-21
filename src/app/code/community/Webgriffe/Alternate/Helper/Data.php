@@ -12,8 +12,10 @@ class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
     {
         /** @var Mage_Catalog_Model_Product|null $product */
         $product = Mage::registry('current_product');
+
+        $categoryId = Mage::app()->getRequest()->getParam('category');
         /** @var Mage_Catalog_Model_Category|null $category */
-        $category = Mage::registry('current_category');
+        $category = Mage::getModel('catalog/category')->load($categoryId);
 
         if ($product) {
             $rewrittenProductUrl = $this->rewrittenProductUrl(
