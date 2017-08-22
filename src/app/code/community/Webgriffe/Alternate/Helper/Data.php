@@ -17,7 +17,7 @@ class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
         /** @var Mage_Catalog_Model_Category|null $category */
         $category = Mage::getModel('catalog/category')->load($categoryId);
 
-        if ($product) {
+        if ($product && $product->getId()) {
             $rewrittenProductUrl = $this->rewrittenProductUrl(
                 $product->getId(),
                 $category ? $category->getId() : null,
@@ -25,7 +25,7 @@ class Webgriffe_Alternate_Helper_Data extends Mage_Core_Helper_Abstract
             );
             $url = $store->getBaseUrl() . $rewrittenProductUrl;
             return $url;
-        } elseif ($category) {
+        } elseif ($category && $category->getId()) {
             $url = $store->getBaseUrl() . $this->rewrittenCategoryUrl($category->getId(), $store);
             return $url;
         } else {
